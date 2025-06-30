@@ -30,6 +30,7 @@ export const Login = () => {
         if (data.success) {
           setIsLoggedIn(true);
           getUserData();
+          toast.success(data.msg || "Account Created Successfully");
           navigate("/login");
         } else {
           toast.error(data.message);
