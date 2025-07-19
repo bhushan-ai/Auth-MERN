@@ -43,14 +43,14 @@ function EmailVerify() {
         {
           otp,
         }
-      );
+      ); //
       if (data.success) {
         toast.success(data.message || "Email Verified Successfully");
         getUserData();
         navigate("/");
       } else {
         toast.error(error.message || "Something went wrong");
-      }
+      } //
     } catch (error) {
       toast.error(error.message);
     }

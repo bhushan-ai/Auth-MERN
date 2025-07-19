@@ -20,7 +20,7 @@ const getAllUserData = async (req, res) => {
       },
     });
   } catch (error) {
-    return res.status(500).json({ success: false, msg: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 

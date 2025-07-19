@@ -5,12 +5,11 @@ import transporter from "../config/nodeMailer.js";
 
 export const register = async (req, res) => {
   const { email, username, password, fullname } = req.body;
-  //[email, username, password, name].some((field) => field.trim() === "")
 
   if ([email, username, password, fullname].some((field) => !field?.trim?.())) {
     return res
       .status(400)
-      .json({ success: false, msg: "All fields are required" });
+      .json({ success: false, message: "All fields are required" });
   }
 
   try {
@@ -18,7 +17,7 @@ export const register = async (req, res) => {
     if (existingUser) {
       return res
         .status(409)
-        .json({ success: false, msg: "user already exist " });
+        .json({ success: false, message: "user already exist " });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -55,7 +54,7 @@ export const register = async (req, res) => {
       .status(200)
       .json({ success: true, message: "SignUp successfully" });
   } catch (error) {
-    return res.status(404).json({ success: false, msg: error.message });
+    return res.status(404).json({ success: false, message: error.message });
   }
 };
 
@@ -65,18 +64,18 @@ export const login = async (req, res) => {
   if ([email, password].some((field) => field.trim() === "")) {
     return res
       .status(400)
-      .json({ success: false, msg: "Email and password are required" });
+      .json({ success: false, message: "Email and password are required" });
   }
 
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ success: false, msg: "invalid email" });
+      return res.status(400).json({ success: false, message: "invalid email" });
     }
 
     const isMatched = await bcrypt.compare(password, user.password);
     if (!isMatched) {
-      return res.status(400).json({ success: false, msg: "invalid password" });
+      return res.status(400).json({ success: false, message: "invalid password" });
     }
 
     const token = jwt.sign({ id: user._id }, process.env.SECRET, {
@@ -90,9 +89,9 @@ export const login = async (req, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({ success: true, msg: "Login successfully" });
+    return res.status(200).json({ success: true, message: "Login successfully" });
   } catch (error) {
-    return res.status(404).json({ success: false, msg: error.message });
+    return res.status(404).json({ success: false, message: error.message });
   }
 };
 
@@ -104,9 +103,9 @@ export const logout = async (req, res) => {
       sameSite: process.env.NODE_ENV === "production" ? none : "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    return res.status(200).json({ success: true, msg: "Logged Out" });
+    return res.status(200).json({ success: true, message: "Logged Out" });
   } catch (error) {
-    return res.status(404).json({ success: false, msg: error.message });
+    return res.status(404).json({ success: false, message: error.message });
   }
 };
 
@@ -114,7 +113,7 @@ export const sendVerifyOtp = async (req, res) => {
   const userId = req.user?.id;
 
   if (!userId) {
-    return res.status(400).json({ success: false, msg: "userId required" });
+    return res.status(400).json({ success: false, message: "userId required" });
   }
 
   try {
@@ -142,9 +141,9 @@ export const sendVerifyOtp = async (req, res) => {
     await transporter.sendMail(mailOptions);
     return res
       .status(200)
-      .json({ success: true, msg: "Verification OTP sent on email" });
+      .json({ success: true, message: "Verification OTP sent on email" });
   } catch (error) {
-    return res.status(500).json({ success: false, msg: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -155,7 +154,7 @@ export const verifyEmail = async (req, res) => {
   if (!userId || !otp) {
     return res
       .status(400)
-      .json({ success: false, msg: "userId and otp required" });
+      .json({ success: false, message: "userId and otp required" });
   }
   try {
     const user = await User.findById(userId);
@@ -177,7 +176,7 @@ export const verifyEmail = async (req, res) => {
       .status(200)
       .json({ success: true, msg: "Email verified successfully" });
   } catch (error) {
-    return res.status(500).json({ success: false, msg: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -185,7 +184,7 @@ export const isVerified = async (req, res) => {
   try {
     return res.status(200).json({ success: true });
   } catch (error) {
-    return res.status(500).json({ success: false, msg: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -220,10 +219,10 @@ export const sendResetOtp = async (req, res) => {
     await transporter.sendMail(mailOptions);
     return res.status(200).json({
       success: true,
-      msg: "Email for reset password sent successfully",
+      message: "Email for reset password sent successfully",
     });
   } catch (error) {
-    return res.status(500).json({ success: false, msg: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -266,6 +265,6 @@ export const resetPassword = async (req, res) => {
       msg: "New password has been saved successfully",
     });
   } catch (error) {
-    return res.status(500).json({ success: false, msg: error.message });
+    return res.status(500).json({ success: false, message: error.message });
   }
 };

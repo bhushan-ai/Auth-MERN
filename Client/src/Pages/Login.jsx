@@ -30,7 +30,7 @@ export const Login = () => {
         if (data.success) {
           setIsLoggedIn(true);
           getUserData();
-          toast.success(data.msg || "Account Created Successfully");
+          toast.success(data.message);
           setEmail("");
           setPassword("");
           setState("Logged In");
@@ -46,13 +46,11 @@ export const Login = () => {
           setIsLoggedIn(true);
           getUserData();
           navigate("/");
-          toast.success(data.message || "LogIn Successfully");
+          toast.success(data.message);
         } else {
           toast.error(data.message);
         }
       }
-
-      // eslint-disable-next-line no-unused-vars, no-empty
     } catch (error) {
       toast.error(error.message);
     }

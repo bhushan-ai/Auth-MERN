@@ -33,7 +33,7 @@ function Navbar() {
       if (data.success) {
         setIsLoggedIn(false);
         setUserData(false);
-        toast.success(data.message || "Logged Out Successfully");
+        toast.success(data.message);
       }
       navigate("/");
     } catch (error) {
