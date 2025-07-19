@@ -9,11 +9,11 @@ const port = process.env.PORT || 8001;
 
 const app = express();
 
-const allowedOrigins = ["http://localhost:5173"];
+// const allowedOrigins = ["http://localhost:5173"];
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ origin: allowedOrigins, credentials: true }));
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 
 //api endpoints
 app.get("/", (req, res) => {

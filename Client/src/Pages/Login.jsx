@@ -31,7 +31,9 @@ export const Login = () => {
           setIsLoggedIn(true);
           getUserData();
           toast.success(data.msg || "Account Created Successfully");
-          navigate("/login");
+          setEmail("");
+          setPassword("");
+          setState("Logged In");
         } else {
           toast.error(data.message);
         }
