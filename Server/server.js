@@ -17,17 +17,17 @@ const allowedOrigins = [
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
+  app.use(
+    cors({
+      origin: (origin, cb) =>
+        !origin || allowedOrigins.includes(origin)
+          ? cb(null, true)
+          : cb(new Error("Not allowed by CORS")),
+      credentials: true,
+    })
+  )
 );
+
 //api endpoints
 app.get("/", (req, res) => {
   return res.end("welcome");
