@@ -17,15 +17,10 @@ const allowedOrigins = [
 app.use(express.json());
 app.use(cookieParser());
 app.use(
-  app.use(
-    cors({
-      origin: (origin, cb) =>
-        !origin || allowedOrigins.includes(origin)
-          ? cb(null, true)
-          : cb(new Error("Not allowed by CORS")),
-      credentials: true,
-    })
-  )
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
 );
 
 //api endpoints
@@ -45,4 +40,3 @@ connection()
   .catch(() => {
     console.log(`something went wrong while connecting to MongoDb`);
   });
-export default app;
