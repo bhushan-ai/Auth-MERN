@@ -26,3 +26,5 @@ connection()
     app.listen(port, () => console.log(`Server started on port ${port}`))
   )
   .catch((err) => console.error("DB connection error:", err));
+
+export default app;
