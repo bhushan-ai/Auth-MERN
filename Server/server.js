@@ -10,7 +10,7 @@ const port = process.env.PORT || 8000;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://auth-mern-your-frontend.vercel.app",
+  "https://auth-mern-delta.vercel.app",
 ];
 
 app.use(express.json());
