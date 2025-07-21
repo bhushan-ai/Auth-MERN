@@ -40,3 +40,5 @@ connection()
   .catch(() => {
     console.log(`something went wrong while connecting to MongoDb`);
   });
+
+export default app;
